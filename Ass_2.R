@@ -24,8 +24,7 @@ my.data
 names(my.data)						## Look at the variable names
 
 attach(my.data)
-hist(typocerus)						## Look at data 
-plot(site,typocerus)						## Plot counts vs sites
+hist(typocerus)						## Look at data
 
 
 "
@@ -43,28 +42,20 @@ make the null distribution and actual data in the graphs different colors,
 and provide a legend of these. [4]
 """
 hist(typocerus)
-rand_dist <- rpois(1000, lambda = 245/43 )
+rand_dist <- rpois(43, lambda = 245/43 ) # create a random distribution, with poisson. Sample number?
 hist (rand_dist, col = "red", density = 20,breaks = 6, main = "Random Density")
-plot (rand_dist,
-
+plot(density(rand_dist)) # line graph of rand dist 
+plot(density(typocerus))
 "
 3.) What kind of analysis should you use to determine whether the beetles are 
 distributed randomly? There are many possibilities (e.g., Fortin & Dale 2005), 
 but use a method you saw in class. [2]
 
+I will use the Chi-square goodness of fit test. This test is best when comparing results of observed
+and expected distrubutions, in this case the observed site distribution of Typocerus
+and random distribution via. Poisson. 
+
 "
-my.data
-my.test <- shapiro.test(typocerus) ## the results are significant p-value = 1.014e-12, which means it is NOT NORMAL
-
-
-test.modeltyp <- lm(site ~ typocerus)			## Run a linear model
-my.bc <- boxcox(test.modeltyp, lambda=seq(-2, 4, by=0.1) )	## Use the lm model object and range of lambdas in b-c (needs MASS package)
-my.bc <- boxcox(test.modeltyp, lambda=seq(1.4, 1.6, by=0.01) ) ## 1.425
-
-new.typ <- (typocerus^1.425)/1.425	
-hist(new.typ)
-shapiro.test(new.typ)  # still significant did not work 
-hist(typocerus)	
 
 
 "
@@ -72,6 +63,9 @@ hist(typocerus)
 p value). You can do this either with a canned routine if you find an appropriate 
 command, or manually (but use R either way). [5]
 "
+test <- chisq.test(typocerus, rand_dist)
+print ("The test results are: X-squared = 81.935, df = 81, p-value = 0.45")
+
 
 "
 5.) What do you conclude regarding the hypothesis of non-random spatial distribution?
