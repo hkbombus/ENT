@@ -42,14 +42,10 @@ that you will test against, with both in the same plot. Label axes appropriately
 make the null distribution and actual data in the graphs different colors, 
 and provide a legend of these. [4]
 """
-hist(typocerus)		
-hist(rpois(43, lambda = ), breaks = 6)
-
-mean <- rnorm(100,40)
-hist(mean, col = "red", density = 20)
-my.tst_norm <- shapiro.test(my.means)
-
-points(mean, type="l", col="blue")
+hist(typocerus)
+rand_dist <- rpois(1000, lambda = 245/43 )
+hist (rand_dist, col = "red", density = 20,breaks = 6, main = "Random Density")
+plot (rand_dist,
 
 "
 3.) What kind of analysis should you use to determine whether the beetles are 
