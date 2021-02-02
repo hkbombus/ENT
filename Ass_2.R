@@ -68,7 +68,7 @@ p value). You can do this either with a canned routine if you find an appropriat
 command, or manually (but use R either way). [5]
 "
 test <- chisq.test(typocerus, rand_dist, rescale.p = TRUE, simulate.p.value = TRUE)
-print ("The test results are: X-squared = 81.935, df = NA, p-value = 0.4473")
+print (test)
 
 
 "
