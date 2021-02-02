@@ -51,9 +51,13 @@ plot(density(typocerus))
 distributed randomly? There are many possibilities (e.g., Fortin & Dale 2005), 
 but use a method you saw in class. [2]
 
-I will use the Chi-square goodness of fit test. This test is best when comparing results of observed
-and expected distrubutions, in this case the observed site distribution of Typocerus
+I need to test the goodness of fit, for this I will use the Chi-square test.
+This test is best when comparing results of observed and expected distrubutions -
+in this case the observed site distribution of Typocerus
 and random distribution via. Poisson. 
+
+If the Chi-square test returns a non signficant value we can assume that observed data
+and the random distribution are not the same, and that the Typocerus are not randomly distributed. 
 
 "
 
@@ -63,11 +67,14 @@ and random distribution via. Poisson.
 p value). You can do this either with a canned routine if you find an appropriate 
 command, or manually (but use R either way). [5]
 "
-test <- chisq.test(typocerus, rand_dist)
-print ("The test results are: X-squared = 81.935, df = 81, p-value = 0.45")
+test <- chisq.test(typocerus, rand_dist, rescale.p = TRUE, simulate.p.value = TRUE)
+print ("The test results are: X-squared = 81.935, df = NA, p-value = 0.4473")
 
 
 "
 5.) What do you conclude regarding the hypothesis of non-random spatial distribution?
 Be careful with how you phrase this.
 "
+
+"The test results are not signficant indicating there is not a goodness of fit
+and that Typocerus is not randomly distributed."
