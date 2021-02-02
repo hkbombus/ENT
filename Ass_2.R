@@ -69,7 +69,7 @@ command, or manually (but use R either way). [5]
 "
 test <- chisq.test(typocerus, rand_dist, rescale.p = TRUE, simulate.p.value = TRUE)
 print (test)
-asdf
+
 
 
 "
