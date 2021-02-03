@@ -29,23 +29,25 @@ hist(typocerus)						## Look at data
 
 "
 1.) Plan how you will test the hypothesis. Do you need to transform the data? Why or why not?
-
-To test the hypothesis I will see if the the distribution of longicorn beetles is signficantly different from 
-a random distribution of numbers using Poisson, to test this I will use the Chi-square goodness of fit. 
-
 "
+print(
+"
+To test the hypothesis I will see if the the distribution of longicorn beetles is signficantly different from 
+a random distribution of numbers using Poisson, to test this I will use the Chi-square goodness of fit.
+")
 
 "
 2.) Plot a histogram of the data and the appropriate probability density function 
 that you will test against, with both in the same plot. Label axes appropriately, 
 make the null distribution and actual data in the graphs different colors, 
 and provide a legend of these. [4]
-"""
+"
 
 rand_dist <- rpois(43, lambda = 245/43 ) # create a random distribution, with poisson. Sample number?
 
 #on screen
-hist(typocerus,col = "red", density = 20,breaks = 6, main = "Site Density of Typocerus", xlab = "Typocerus")
+par(mfrow=c(1,2))		
+hist(typocerus,col = "red", density = 20,breaks = 6, main = "Typocerus Site Density", xlab = "Typocerus")
 plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
 
 #separate window 
@@ -56,8 +58,16 @@ par(mfrow=c(1,2))						## Create frame for multiple plots
 hist(typocerus,col = "red", density = 20,breaks = 6, main = "Site Density of Typocerus", xlab = "Typocerus")
 plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
 
+
+#separate file
+jpeg("Typvspoiss.jpg")			## Save the following to a jpg in the wdir
+par(mfrow=c(1,2))						
+hist(typocerus,col = "red", density = 20,breaks = 6, main = "Typocerus Site Density", xlab = "Typocerus")
+plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+dev.off()		
+
 # I tried to use ggplots but I could not get this to run: 
-as.data.frame(mcolnames)
+as.data.frame(my.data)
 ggplot(my.data, aes(y=typocerus))+
   geom_histogram(x)
 
@@ -65,18 +75,13 @@ ggplot(my.data, aes(y=typocerus))+
 "
 3.) What kind of analysis should you use to determine whether the beetles are 
 distributed randomly? There are many possibilities (e.g., Fortin & Dale 2005), 
-but use a method you saw in class. [2]
+but use a method you saw in class. [2]"
 
-I need to test the goodness of fit, for this I will use the Chi-square test.
-This test is best when comparing results of observed and expected distrubutions -
-in this case the observed site distribution of Typocerus
-and random distribution via. Poisson. 
-
-If the Chi-square test returns a non signficant value we can assume that observed data
-and the random distribution are not the same, and that the Typocerus are not randomly distributed. 
-
-"
-
+print("
+I need to test the goodness of fit, for this I will use the Chi-square test.This test is best when comparing results of observed and expected distrubutions -in this case the observed site distribution of Typocerus
+and random distribution via. Poisson. If the Chi-square test returns a non signficant value we can assume that observed data
+and the random distribution are not the same, and that the Typocerus are not randomly distributed.
+")
 
 "
 4.) Perform the analysis and report the results (test statistic, degrees of freedom, 
@@ -92,5 +97,7 @@ print (test)
 Be careful with how you phrase this.
 "
 
-"The test results are not signficant indicating there is not a goodness of fit
-and that Typocerus is not randomly distributed."
+print(
+"
+The test results are not signficant indicating there is not a goodness of fit and that Typocerus is not randomly distributed.
+")
