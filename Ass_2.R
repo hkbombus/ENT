@@ -31,7 +31,7 @@ hist(typocerus)						## Look at data
 1.) Plan how you will test the hypothesis. Do you need to transform the data? Why or why not?
 
 To test the hypothesis I will see if the the distribution of longicorn beetles is signficantly different from 
-a random distribution of numbers using Poisson. I will not transfrom the data ??? 
+a random distribution of numbers using Poisson, to test this I will use the Chi-square goodness of fit. 
 
 "
 
@@ -41,11 +41,27 @@ that you will test against, with both in the same plot. Label axes appropriately
 make the null distribution and actual data in the graphs different colors, 
 and provide a legend of these. [4]
 """
-hist(typocerus)
+
 rand_dist <- rpois(43, lambda = 245/43 ) # create a random distribution, with poisson. Sample number?
-hist (rand_dist, col = "red", density = 20,breaks = 6, main = "Random Density")
-plot(density(rand_dist)) # line graph of rand dist 
-plot(density(typocerus))
+
+#on screen
+hist(typocerus,col = "red", density = 20,breaks = 6, main = "Site Density of Typocerus", xlab = "Typocerus")
+plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+
+#separate window 
+dev.new(title = "Distributions", 
+        noRStudioGD = TRUE
+)
+par(mfrow=c(1,2))						## Create frame for multiple plots 
+hist(typocerus,col = "red", density = 20,breaks = 6, main = "Site Density of Typocerus", xlab = "Typocerus")
+plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+
+# I tried to use ggplots but I could not get this to run: 
+as.data.frame(mcolnames)
+ggplot(my.data, aes(y=typocerus))+
+  geom_histogram(x)
+
+
 "
 3.) What kind of analysis should you use to determine whether the beetles are 
 distributed randomly? There are many possibilities (e.g., Fortin & Dale 2005), 
@@ -69,7 +85,6 @@ command, or manually (but use R either way). [5]
 "
 test <- chisq.test(typocerus, rand_dist, rescale.p = TRUE, simulate.p.value = TRUE)
 print (test)
-
 
 
 "
