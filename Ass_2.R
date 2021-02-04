@@ -48,7 +48,7 @@ poissdist <- rpois(500, lambda = mean(typocerus))
 #on screen
 par(mfrow=c(1,2))		
 hist(typocerus,col = "red", density = 20,breaks = 6, main = "Typocerus Site Density", xlab = "Typocerus")
-plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+plot(density(poissdist), col = "blue", main = "Poisson Density Functioin") 
 
 #separate window 
 dev.new(title = "Distributions", 
@@ -56,14 +56,14 @@ dev.new(title = "Distributions",
 )
 par(mfrow=c(1,2))						## Create frame for multiple plots 
 hist(typocerus,col = "red", density = 20,breaks = 6, main = "Site Density of Typocerus", xlab = "Typocerus")
-plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+plot(density(rpoissdist), col = "blue", main = "Poisson Density Functioin") 
 
 
 #separate file
-jpeg("Typvspoiss.jpg")			## Save the following to a jpg in the wdir
+jpeg("Ass_2_Klein.jpg")			## Save the following to a jpg in the wdir
 par(mfrow=c(1,2))						
 hist(typocerus,col = "red", density = 20,breaks = 6, main = "Typocerus Site Density", xlab = "Typocerus")
-plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
+plot(density(poissdist), col = "blue", main = "Poisson Density Functioin") 
 dev.off()		
 
 #tried to use ggplots but I could not get this to run: 
@@ -90,11 +90,14 @@ command, or manually (but use R either way). [5]
 "
 plot(lm(site ~ typocerus, data = my.data))
 
-test <- chisq.test(typocerus, rand_dist)
+new.data <- cbind(typocerus,poissdist) # trying with a higher sample size, but I believe this is over magnifying
+testfail <- chisq.test(table(new.data))
+
+test <- chisq.test(typocerus, rand_dist) # with 43 
 print (test)
 
-mytab <- (table(typocerus, poissdist))
-test2 <- chisq.test(mytab)
+
+
 
 "
 5.) What do you conclude regarding the hypothesis of non-random spatial distribution?
