@@ -42,8 +42,8 @@ that you will test against, with both in the same plot. Label axes appropriately
 make the null distribution and actual data in the graphs different colors, 
 and provide a legend of these. [4]
 "
-
-rand_dist <- rpois(43, lambda = 245/43 ) # create a random distribution, with poisson. Sample number?
+rand_dist <- rpois(43, lambda = mean(typocerus) ) # create a random distribution, with poisson. Sample number?
+poissdist <- rpois(500, lambda = mean(typocerus))
 
 #on screen
 par(mfrow=c(1,2))		
@@ -66,10 +66,10 @@ hist(typocerus,col = "red", density = 20,breaks = 6, main = "Typocerus Site Dens
 plot(density(rand_dist), col = "blue", main = "Poisson Density Functioin") 
 dev.off()		
 
-# I tried to use ggplots but I could not get this to run: 
-as.data.frame(my.data)
-ggplot(my.data, aes(y=typocerus))+
-  geom_histogram(x)
+#tried to use ggplots but I could not get this to run: 
+#as.data.frame(my.data)
+#ggplot(my.data, aes(y=typocerus))+
+  #geom_histogram(x)
 
 
 "
@@ -88,9 +88,13 @@ and the random distribution are not the same, and that the Typocerus are not ran
 p value). You can do this either with a canned routine if you find an appropriate 
 command, or manually (but use R either way). [5]
 "
-test <- chisq.test(typocerus, rand_dist, rescale.p = TRUE, simulate.p.value = TRUE)
+plot(lm(site ~ typocerus, data = my.data))
+
+test <- chisq.test(typocerus, rand_dist)
 print (test)
 
+mytab <- (table(typocerus, poissdist))
+test2 <- chisq.test(mytab)
 
 "
 5.) What do you conclude regarding the hypothesis of non-random spatial distribution?
