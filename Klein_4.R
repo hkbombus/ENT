@@ -17,15 +17,24 @@ my.data <- read.csv("SaperdaTridentata_elytra.csv", header=T)
 my.data
 attach(my.data)
 names(my.data)
-x <- table(Sex,Size)
-barplot(x)
+
+
 # not sure how to predict with out making the data binary 
+
 data.log <- glm(Sex ~ Size,data=my.data, family=binomial("logit"))	
-Tv.pred <- predict(x, type="response")	
+my.pred <- predict(x, type="response")	
 
 
 #2.) Convert the male/female factor (sex) to be male=0 and female=1. Replot the data.
+my.data$isFemale = as.integer(Sex == "f")
 
+my.log <- glm(isFemale ~ Size, data=my.data, family=binomial("logit"))	
+my.log
+summary(my.log)									# Lots of information here
+
+my.pred1 <- predict(my.log, type="response")				# One of several ways to generate the predicted values
+plot(Size, isFemale)							# Make original plot and ...
+points(Size, isFemale, pch=10, col="blue", cex=0.5)		# Add the predicted as smaller red points
 
 # 3.) Conduct a logistic regression on the data. Replot the data (from question 2) and make the
 # male and female points different colors and symbols. Add a curve of the predicted relationship
