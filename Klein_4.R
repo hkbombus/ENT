@@ -4,11 +4,11 @@
 
 #setwd(F:/128 Sandisk backup/2021 Classes/ENTM642)
 
-# library(MASS)							# One of the most well-used packages 
-# library(ROCR)							# ROC curves and other classification evaluation tools
-# library(PredictABEL) 						# Handy for Hosmer-Lemeshow plot for model goodness of fit 
-# library(PresenceAbsence)  					# All kinds of goodies for pres--abs data
-#library(ggplot2) 
+library(MASS)							# One of the most well-used packages
+library(ROCR)							# ROC curves and other classification evaluation tools
+library(PredictABEL) 						# Handy for Hosmer-Lemeshow plot for model goodness of fit
+library(PresenceAbsence)  					# All kinds of goodies for pres--abs data
+library(ggplot2)
 
 # 1.) Read in the SaperdaTridentata_elytra.csv data. Plot the data with sex as a predictor of elytral
 # length (size).
@@ -25,13 +25,8 @@ size<-my.data$Size
 df<- data.frame(size, sex)
 plot <-ggplot(df, aes( x=sex,y=size,color=sex)) +
   geom_point() +
-  labs(title="Length and sex",x="Length", y = "Sex")
+  labs(title="Length and Sex",x="Length", y = "Sex")
 plot + scale_color_brewer(palette ="Set2")+theme_classic()
-
-# not sure how to predict with out making the data binary 
-
-data.log <- glm(Sex ~ Size,data=my.data, family=binomial("logit"))	
-my.pred <- predict(x, type="response")	
 
 #2.) Convert the male/female factor (sex) to be male=0 and female=1. Replot the data.
 # my.data$isFemale = as.integer(Sex == "f")
@@ -54,7 +49,7 @@ my.pred1 <- predict(my.log, type="response")
 
 plot(Size, isFemale, col=as.numeric(isFemale)+33, pch=as.numeric(isFemale)+5,
      ylab = "Sex: Female (1), Male (0)",
-     xlab = "Lenght",
+     xlab = "Length",
      main = "Saperda Tridentata Length by Sex")
 points(Size, my.pred1, pch=16, col="blue", cex=0.8)
 legend(20, .3, legend=c("Female", "Male"), col=c("red", "black"), pch =(6:5)) # cant get legend to work 
@@ -83,6 +78,6 @@ with(my.log, pchisq(null.deviance - deviance, df.null - df.residual, lower.tail 
 #   6.) What does the coefficient tell you about the change in probability of a beetle being male or
 # female for a given length of elytra?
 
-# It is the change in the logit ratio for one change in x. We can see that as we move towards one (female) 0.9436
+# It is the change in the logit ratio for one change in x. We can see that as we move towards one (female,1) 0.9436
 # the evidence points to females being more likely to have long antennas.  
 
